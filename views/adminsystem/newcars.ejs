@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0"
+    />
+    <title>Admin</title>
+    <link rel="stylesheet" href="/css/dashboard.css">
+  </head>
+  <body>
+    <div class="container">
+      <aside>
+        <div class="top">
+          <div class="logo">
+            <img src="/images/fyp1.png" alt="" />
+            <h2>Yasir<span class="danger">Motors</span></h2>
+          </div>
+          <div class="close" id="close-btn">
+            <span class="material-symbols-outlined"> close </span>
+          </div>
+        </div>
+        <div class="sidebar">
+          <a href="/adminsystem/dashboard" >
+            <span class="material-symbols-outlined"> dashboard </span>
+            <h3>DASHBOARD</h3>
+          </a>
+          <a href="/adminsystem/order">
+            <span class="material-symbols-outlined"> orders </span>
+            <h3>BOOKINGS</h3>
+          </a>
+          <a href="/adminsystem/sales">
+            <span class="material-symbols-outlined"> point_of_sale </span>
+            <h3>SALE</h3>
+          </a>
+          <a href="/adminsystem/newcars" class="active">
+            <span class="material-symbols-outlined"> database </span>
+            <h3>NEW CARS</h3>
+          </a>
+          <a href="/adminsystem/additem">
+            <span class="material-symbols-outlined"> upload_file </span>
+            <h3>ADD NEW</h3>
+          </a>
+          <a href="/logout">
+            <span class="material-symbols-outlined"> logout </span>
+            <h3>Logout</h3>
+          </a>
+        </div>
+      </aside>
+      <main>
+        <h1>ALL NEW ARRIVALS</h1>
+        <div class="date">
+          <input type="date" />
+        </div>
+        <div class="insights">
+          <!-- =====================================start=================================================== -->
+          
+    
+          
+          <!-- =====================================end=================================================== -->
+        </div>
+        <div class="recent-orders">
+          <h2>Recent Updates</h2>
+          <table>
+            <thead>
+              <tr>
+                <th class="text-center" >Images</th>
+                <th class="text-center">Product Title</th>
+                <th class="text-center">Product SKU</th>
+                <th class="text-center">Product Price</th>
+                <th class="text-center">Delete panal</th>
+                <th class="text-center">Edit panal</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% for(let i = 0; i < cars.length; i++) { %>
+                <tr data-missing="<%= !cars[i].imageExists || !cars[i].productCodeExists %>">
+                  <td>
+                      <img style="height: 50px;width: 50px;" src="<%= cars[i].image.replace('/public', '') %>" alt="Image">
+                  </td>
+                  <td data-label="Project Name">
+                      <div class="text-center">
+                          <p class="fw-bold mb-1"><%= cars[i].title %></p>
+                      </div>
+                  </td>
+                  <td data-label="Project Locatiom" class="text-center"><%= cars[i].engine_number %></td>
+                  <td class="text-center" data-label="Status"><span ><%= cars[i].price %></span></td>
+                  <td>
+                    <% if (user.role !== 'guest') { %>
+                      <form action="/delete/<%= cars[i]._id %>" method="POST">
+                          <button style="background-color: transparent;color: red;border: none;" type="submit"><span class="material-symbols-outlined">
+                            delete
+                            </span></button>
+                      </form>
+                     
+    
+                  </td>
+                  <td>
+                      <a style="color: #4CAF50;" href="/adminsystem/editarrivaldata/<%= cars[i]._id %>"  class="btn btn-primary"><span class="material-symbols-outlined">
+                        edit
+                        </span></a>
+                  </td>
+                  <% } else { %>
+                    <p>Only for Admin to Edit</p>
+                <% } %>
+              </tr>
+              <% } %>
+            </tbody>
+          </table>
+          <a href="#">Show All</a>
+        </div>
+      </main>
+      <!-- ======================Main ended=========================== -->
+      <div class="right">
+        <div class="top">
+          <button id="menu-btn">
+            <span class="material-symbols-outlined"> menu </span>
+          </button>
+          <div class="theme-toggler">
+            <span class="material-symbols-outlined active"> light_mode </span>
+            <span class="material-symbols-outlined"> dark_mode </span>
+          </div>
+          <div class="profile">
+            <div class="info">
+              <p>Hey, <b>Umer</b></p>
+              <small class="text-muted">Admin</small>
+            </div>
+            <div class="profile-photo">
+              <img src="" alt="" />
+            </div>
+          </div>
+        </div>
+        <!-- ================================Top Ended============================ -->
+       
+    <script>
+      const sideMenu = document.querySelector("aside");
+      const menuBtn = document.querySelector("#menu-btn");
+      const closeBtn = document.querySelector("#close-btn");
+      const themeToggler = document.querySelector(".theme-toggler");
+      menuBtn.addEventListener("click", () => {
+        sideMenu.style.display = "block";
+      });
+      closeBtn.addEventListener("click", () => {
+        sideMenu.style.display = "none";
+      });
+
+      themeToggler.addEventListener("click", () => {
+        document.body.classList.toggle("dark-theme-variables");
+        themeToggler
+          .querySelector("span:nth-child(1)")
+          .classList.toggle("active");
+        themeToggler
+          .querySelector("span:nth-child(2)")
+          .classList.toggle("active");
+      });
+
+      // orders.forEach(order =>{
+      //   const tr = document.createElement('tr');
+      //   const trContent =`
+      //            <td>${order.productname}</td>
+      //   `
+      // })
+      // tr.innterHTML =trContent;
+      // document.querySelector('table tbody').appendChild(tr);
+    </script>
+     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+     <script>
+       window.onload = function() {
+           const rows = document.querySelectorAll('tr[data-missing="true"]');
+           console.log('Rows with missing data:', rows.length);
+           for (const row of rows) {
+               row.classList.add('missing-data');
+           }
+       };
+
+       $("#change-status").change(function(){
+         var selectedValue=$('#change-status :selected').text(); 
+         if(selectedValue === "All"){
+           $('table > tbody  > tr').each(function(i) {
+                 $(this).show() 
+           });
+         }else{
+           $('table > tbody  > tr > td').each(function(i) {
+             if(this.dataset.label === "Status"){
+               if($(this).children( 'span' ).text() != selectedValue){
+                 $(this).closest("tr").hide()
+               }else{
+                 $(this).closest("tr").show()
+               }
+ 
+             }
+           });
+         }
+         
+       });
+   </script>
+  </body>
+</html>

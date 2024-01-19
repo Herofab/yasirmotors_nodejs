@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0"
+    />
+    <title>Admin</title>
+    <link rel="stylesheet" href="/css/dashboard.css">
+  </head>
+  <body>
+    <div class="container">
+      <aside>
+        <div class="top">
+          <div class="logo">
+            <img src="/images/fyp1.png" alt="" />
+            <h2>Yasir<span class="danger">Motors</span></h2>
+          </div>
+          <div class="close" id="close-btn">
+            <span class="material-symbols-outlined"> close </span>
+          </div>
+        </div>
+        <div class="sidebar">
+          <a href="/adminsystem/dashboard" >
+            <span class="material-symbols-outlined"> dashboard </span>
+            <h3>DASHBOARD</h3>
+          </a>
+          <a href="/adminsystem/order" class="active">
+            <span class="material-symbols-outlined"> orders </span>
+            <h3>BOOKINGS</h3>
+          </a>
+          <a href="/adminsystem/sales">
+            <span class="material-symbols-outlined"> point_of_sale </span>
+            <h3>SALE</h3>
+          </a>
+          <a href="/adminsystem/newarrival" >
+            <span class="material-symbols-outlined"> database </span>
+            <h3>NEW CARS</h3>
+          </a>
+          <a href="/adminsystem/additem">
+            <span class="material-symbols-outlined"> upload_file </span>
+            <h3>ADD NEW</h3>
+          </a>
+          <a href="/logout">
+            <span class="material-symbols-outlined"> logout </span>
+            <h3>Logout</h3>
+          </a>
+        </div>
+      </aside>
+      <main>
+        <h1>ALL NEW ARRIVALS</h1>
+        <div class="date">
+          <input type="date" />
+          <select class="form-control"
+                                    aria-label="Projects Select" id="change-status">
+                                    <option selected value="All">All</option>
+                                    <option value="pending">pending</option>
+                                    <option value="confirmed">confirmed</option>
+                                    <option value="shipping">shipping</option>
+                                </select>
+        </div>
+        <div class="insights">
+          <!-- =====================================start=================================================== -->
+          
+    
+          
+          <!-- =====================================end=================================================== -->
+        </div>
+        <div class="recent-orders">
+          <h2>Recent Updates</h2>
+          <% if (user.role !== 'operator') { %>
+            <table>
+              <thead>
+                <tr>
+                  <th class="text-center" style="width:65px;">S.No</th>
+                  <th class="text-center">Order ID</th>
+                  <th class="text-center">Total Price</th>
+                  <th class="text-center">Status</th>
+                  <th class="text-center">View Full</th>
+                </tr>
+              </thead>
+              <tbody>
+                <% orders.forEach(function(order, i) { %>
+                  <tr>
+                    <td data-label="S.No"><%= i + 1 %></td>
+                      <td data-label="Project Name">
+                          <div class="text-center">
+                              <p class="fw-bold mb-1"><%= order._id %></p>
+                              
+                          </div>
+                      </td>
+                      <td data-label="Project Locatiom" class="text-center"><%= order.Total_price %></td>
+                      <td class="text-center" data-label="Status"><span ><%= order.status %></span></td>
+                      <td><a href="/adminsystem/order_detail/<%= order._id %>"><span class="material-symbols-outlined">visibility</span></a>
+                        <a href="/adminsystem/change_status/<%= order._id %>"><span class="material-symbols-outlined">
+                          local_shipping
+                          </span></a>
+                      </td>
+                  </tr>
+                  <% }); %>
+              </tbody>
+            </table>
+            <% } else { %>
+              <h1>WELCOME TO PUMA PAKISTAN</h1>
+              <p>SORRY! YOU ARE NOT ALLOWED TO SEE THIS PAGE YOUR ACCESS ONLY IN (<span class="material-symbols-outlined">
+                database
+                </span> NEWARRIVALS)  &  (<span class="material-symbols-outlined">add</span> ADDITEMS) </p>
+          <% } %>
+          <a href="#">Show All</a>
+        </div>
+      </main>
+      <!-- ======================Main ended=========================== -->
+      <div class="right">
+        <div class="top">
+          <button id="menu-btn">
+            <span class="material-symbols-outlined"> menu </span>
+          </button>
+          <div class="theme-toggler">
+            <span class="material-symbols-outlined active"> light_mode </span>
+            <span class="material-symbols-outlined"> dark_mode </span>
+          </div>
+          <div class="profile">
+            <div class="info">
+              <p>Hey, <b>Umer</b></p>
+              <small class="text-muted">Admin</small>
+            </div>
+            <div class="profile-photo">
+              <img src="" alt="" />
+            </div>
+          </div>
+        </div>
+        <!-- ================================Top Ended============================ -->
+       
+    <script>
+      const sideMenu = document.querySelector("aside");
+      const menuBtn = document.querySelector("#menu-btn");
+      const closeBtn = document.querySelector("#close-btn");
+      const themeToggler = document.querySelector(".theme-toggler");
+      menuBtn.addEventListener("click", () => {
+        sideMenu.style.display = "block";
+      });
+      closeBtn.addEventListener("click", () => {
+        sideMenu.style.display = "none";
+      });
+
+      themeToggler.addEventListener("click", () => {
+        document.body.classList.toggle("dark-theme-variables");
+        themeToggler
+          .querySelector("span:nth-child(1)")
+          .classList.toggle("active");
+        themeToggler
+          .querySelector("span:nth-child(2)")
+          .classList.toggle("active");
+      });
+
+      // orders.forEach(order =>{
+      //   const tr = document.createElement('tr');
+      //   const trContent =`
+      //            <td>${order.productname}</td>
+      //   `
+      // })
+      // tr.innterHTML =trContent;
+      // document.querySelector('table tbody').appendChild(tr);
+    </script>
+     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+     <script>
+      $("#change-status").change(function(){
+        var selectedValue=$(this).val(); 
+        if(selectedValue === "All"){
+          $('table > tbody  > tr').each(function(i) {
+                $(this).show() 
+          });
+        }else{
+          $('table > tbody  > tr').each(function(i) {
+            var status = $(this).find('td:nth-child(4) span').text();
+            if(status != selectedValue){
+              $(this).hide()
+            }else{
+              $(this).show()
+            }
+          });
+        }
+      });
+    </script>
+  </body>
+</html>

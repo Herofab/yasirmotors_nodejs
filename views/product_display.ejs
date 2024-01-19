@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Product Display</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
+
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"/>
+    <script src="https://unpkg.com/just-validate@latest/dist/just-validate.production.min.js" defer></script>
+    
+
+  <style>
+ .main {
+  display: flex;
+  width: 100%;
+  height: 90vh;
+  overflow:hidden
+}
+
+.image1 {
+  width: 60%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.image1 img {
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+}
+.images {
+  width: 40%;
+  background-color: #ffee80;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+  padding: 5px;
+}
+
+.images div {
+  height: 400px; /* Set the height of each child div */
+  margin: 3px; /* Set the margin around each child div */
+  width: calc(100% - 10px); /* Calculate width, subtracting margins */
+  display: flex; /* Use flexbox to center the image */
+  justify-content: center; /* Center the image horizontally */
+  align-items: center; /* Center the image vertically */
+  overflow: hidden; 
+  border-radius: 5px;
+  background-color: aliceblue;
+  padding: 2px;
+}
+
+.images>div> img {
+  width: 97%; /* Make the image take up the full width of its parent */
+  height:380px; /* Set the height of the images to match the divs */
+  object-fit: cover; /* Cover the area of the div without stretching */
+  
+}
+.zoomed-image {
+  position: fixed; /* Position the image fixed on the screen */
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%); /* Center the image */
+  width: 600px;
+  height: 600px;
+  border: 1px solid #000; /* Add a border for visibility */
+  z-index: 1000; /* Ensure the image is above other elements */
+  cursor: pointer; /* Change cursor to indicate clickable */
+  display: none; /* Hide the image by default */
+  border-radius: 10px;
+}
+.details{
+  width: 80%;
+  padding: 10px;
+  border: 2px solid #000;
+  border-radius: 7px;
+  margin: auto auto;
+  
+  
+}
+.cardetail{
+  width: 97%;
+  
+}
+.description{
+  text-align: left;
+  margin-left: 20px;
+  font-weight: 400;
+  
+}
+.bookings{
+  display: flex;
+  justify-content: space-evenly;
+}
+.bookings>input{
+  padding: 3px;
+  border: 1px solid #000;
+  width: 340px;
+
+}
+
+</style>
+</head>
+<body>
+  <header>
+    <div id="menu-btn" class="fas fa-bars"></div>
+    <a href="#" class="logo"> 
+        <img src="/images/fyp1.png" alt="">
+    </a>
+
+    <nav class="navbar">
+        <a href="/">home</a>
+        <a href="#vehicles">vehicles Details</a>
+        
+    </nav>
+    
+    
+    <div id="login-btn">
+        
+        <button class="btn">Register</button>
+        <button class="btn">login</button>
+        <i class="far fa-user"></i>
+    </div>
+</header>
+<br>
+<br><br><br><br>
+  
+  <div class="main" style="height: 90vh !important;">
+    <div class="image1">
+     <img src="<%= car.image.replace('/public', '') %>" alt="<%= car.title %>">
+    </div>
+    <div class="images">
+     <div class="img1">
+  <img src="<%= car.images[0].replace('/public', '') %>" alt="Image 1" onclick="toggleZoom(this.src)">
+</div>
+<div class="img2">
+  <img src="<%= car.images[1].replace('/public', '') %>" alt="Image 2" onclick="toggleZoom(this.src)">
+</div>
+
+    </div>
+   </div>
+   <br><br>
+   <hr>
+
+   <div class="details" style="margin-bottom: 10px;">
+<div class="cardetail">
+  <h1><%= car.title %></h1>
+
+  
+<table id="myTable">
+  <thead>
+    <tr>
+      <th></th>
+      <th>brand</th>
+      <th>type</th>
+      <th>color1</th>
+      <th>color2</th>
+      <th>color3</th>
+      <th>price</th>
+      <th>Transmission</th>
+      <th>Power</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><span class="dot green"></span> </td>
+      
+      <td><%= car.brand %></td>
+      <td><%= car.type %></td>
+      <td><%= car.color1 %> </td>
+      <td><%= car.color2 %> </td>
+      <td><%= car.color3 %> </td>
+      <td>Rs.<%= car.price %></td>
+      <td><%= car.transmition %></td>
+      <td><%= car.engine_power %>CC</td>
+    </tr>
+
+    
+  
+ 
+   
+  </tbody>
+</table>
+<br>
+
+<div class="description">
+  <h2>Description:</h2>
+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <%= car.description %>
+</div>
+<br>
+<form action="/book" method="post">
+  <div class="bookings" style="padding: 5px;">
+    <label for="fromdate"><b>From Date: </b></label>
+    <input type="date" name="fromdate" id="fromdate" required min="<%= minDate %>">
+    <label for="todate"><b>To Date: </b></label>
+    <input type="date" name="todate" id="todate" required min="<%= minDate %>">
+    <label for="quantity"><b>Number of Cars: </b></label>
+    <input type="number" value="1" name="quantity" id="quantity" required>
+  </div>
+  <input type="hidden" name="carId" value="<%= car._id %>"> <!-- Add this line -->
+  <br>
+  <div class="bookbtn" style="text-align: center;">
+    <button type="submit"> Book My Car</button>
+  </div>
+ </form>
+<br>
+
+
+
+</div>
+   </div>
+
+ 
+<!--login section start-->
+<div class="login-form-container">
+
+  <span class="fas fa-times" id="close-login-form"></span>
+
+  <form action="/login" method="POST">
+      <h3>user login</h3>
+      
+      <input type="text" placeholder="UserName" id="username" name="username" class="box">
+      <input type="password" placeholder="password" id="password"  name="password" class="box">
+      <p>forget password <a href="#">click here</a></p>
+      <input type="submit" name = 'loginNow'  value="login now" class="btn">
+      <div class="buttons">
+      </div>
+      <p>don't have an account <a href="#">create now</a></p>
+  </form>
+</div>
+
+
+<!--login section ends -->
+
+<!--Registration for begins-->
+
+<div class="register-form-container">
+
+
+  <span class="fas fa-times" id="close-reg-form"></span>
+
+  <form action="/register" id="register" name="reg" method="POST">
+      <h3>user login</h3>
+      <input type="text" placeholder="UserName" id="username" name="username" class="box">
+      <input type="email" placeholder="Email" id="email" name="email" class="box">
+      <input type="password" placeholder="Password" id="password"  name="password" class="box">
+      <input type="password" placeholder="Confirm Password" id="confirmPassword"  name="confirmPassword" class="box">
+      <input type="submit" name = 'RegisterNow'  value="Register Now" class="btn">
+      <div class="buttons">
+      </div>
+  </form>
+</div>
+
+<!--Registration form ends--> 
+
+  <!-- footer section start -->
+<section class="footer">
+
+  <div class="box-container">
+  
+      <div class="box">
+          <h3>our branches</h3>
+          <a href="#"> <i class="fas fa-map-marker-alt"></i> Sadiqabad </a>
+          <a href="#"> <i class="fas fa-map-marker-alt"></i> blue Area </a>
+          <a href="#"> <i class="fas fa-map-marker-alt"></i> f11 markaz </a>
+      </div>
+
+      <div class="box">
+          <h3>quick links</h3>
+          <a href="#"> <i class="fas fa-arrow-right"></i> home </a>
+          <a href="#"> <i class="fas fa-arrow-right"></i> vehicles </a>
+          <a href="#"> <i class="fas fa-arrow-right"></i> featured </a>
+          <a href="#"> <i class="fas fa-arrow-right"></i> about us </a>
+          <a href="#"> <i class="fas fa-arrow-right"></i> contact </a>
+      </div>
+
+      <div class="box">
+          <h3>quick links</h3>
+          <a href="#"> <i class="fas fa-phone"></i> +123-456-7890 </a>
+          <a href="#"> <i class="fas fa-phone"></i> +123-222-3330 </a>
+      </div>
+
+
+  </div>
+  <div class="credit"> created by Iqra Hanif & Shanzy Akhood | all rights reserved! </div>
+</section>
+<!-- footer section ends -->
+
+
+
+<!-- Display other car details here -->
+<script>
+  function toggleZoom(imageSrc) {
+    // Create or select the zoomed image container
+    var zoomedImage = document.getElementById('zoomed-image');
+    if (!zoomedImage) {
+      zoomedImage = document.createElement('img');
+      zoomedImage.id = 'zoomed-image';
+      zoomedImage.className = 'zoomed-image';
+      document.body.appendChild(zoomedImage);
+    }
+  
+    // Set the source of the zoomed image or hide it if already displayed
+    if (zoomedImage.style.display === 'none' || zoomedImage.src !== imageSrc) {
+      zoomedImage.src = imageSrc;
+      zoomedImage.style.display = 'block';
+    } else {
+      zoomedImage.style.display = 'none';
+    }
+  }
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
+  <script src="/js/script.js"></script>
+</body>
+</html>

@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout</title>
+    <style>
+     .order {
+  display: flex;
+  width: 100%;
+}
+
+.data, .form {
+  flex: 1;
+  padding: 20px;
+  box-sizing: border-box; /* Include padding in the element's total width and height */
+}
+
+.data {
+  background-color: #f0f0f0;
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Center children horizontally */
+  animation: fadeIn 1s ease-in-out; /* Animation for the .data div */
+}
+
+.form {
+  background-color: #ffffff;
+  /* Add any additional styling for .form here */
+}
+
+.car-image {
+  max-width: 100%; /* Image will cover the width of the .data div */
+  height: auto; /* Maintain aspect ratio */
+  margin-bottom: 20px; /* Space between image and order details */
+  animation: zoomIn 1s ease-in-out; /* Animation for the image */
+}
+
+.order-details {
+  text-align: left; /* Center the order details text */
+  animation: slideUp 1s ease-in-out; /* Animation for the order details */
+}
+.order-details ul{
+  padding: 6px;
+}
+.order-details ul li{
+  padding: 8px;
+  font-size: 26px;
+}
+
+
+/* Keyframes for animations */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes zoomIn {
+  from { transform: scale(0.5); }
+  to { transform: scale(1); }
+}
+
+@keyframes slideUp {
+  from { transform: translateY(20px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+input{
+    padding: 7px;
+    margin: 8px auto;
+    width: 90%;
+}
+button{
+    width: 90%;
+    background-color: #130f40;
+    line-height: 30px;
+    color: #fff;
+    padding: 7px;
+    border-radius: 7px;
+}
+h2{
+  font-weight: 200;
+}
+    </style>
+    
+</head>
+<body>
+    <div class="order">
+        <div class="data">
+          <img src="<%= order.car_detail[0].image.replace('/public', '') %> " alt="<%= order.car_detail[0].title %>" class="car-image">
+         
+        </div>
+        <div class="form">
+        
+            <h1 style="text-align: center;padding: 7px;background-color: #130f40;color: #fff;width: 90%;border-radius: 7px;">Submit the Form</h1>
+            <form action="/update-order" method="post">
+                <input type="hidden" name="orderId" value="<%= order._id %>">
+                <input type="email" name="email" placeholder="Email" value="<%= order.email %>" required> <br>
+                <input type="text" name="firstname" placeholder="First Name" value="<%= order.firstname %>" required> <br>
+                <input type="text" name="lastname" placeholder="Last Name" value="<%= order.lastname %>" required><br>
+                <input type="text" name="address1" placeholder="Address Line 1" value="<%= order.address1 %>" required><br>
+                <input type="text" name="address2" placeholder="Address Line 2" value="<%= order.address2 %>"><br>
+                <input type="text" name="city" placeholder="City" value="<%= order.city %>"><br>
+                <input type="text" name="card_number" placeholder="Card Number" value="<%= order.card_number %>"><br>
+                <input type="tel" name="phone" placeholder="Phone" value="<%= order.phone %>" required><br>
+                <input type="tel" name="phone2" placeholder="Alternate Phone" value="<%= order.phone2 %>"><br><br>
+                
+     
+                
+                <button type="submit">Book Now</button>
+              </form>
+<br><hr><br>
+              <div class="total-price" style="display: flex;justify-content: space-between;">
+                <h1>Total Price: </h1>
+                <h1>Rs <%= totalPrice %>/-</h1>
+              </div>
+              <hr>
+              <div class="order-details" style="text-align: left;">
+                <div class="fromdate" style="display: flex;justify-content: space-between;">
+                  <h2>From Date:</h2>
+                  <h2><%= order.fromdate.toDateString() %></h2>
+                </div>
+                <div class="todate" style="display: flex;justify-content: space-between;">
+                  <h2>To Date:</h2>
+                  <h2><%= order.todate.toDateString() %></h2>
+                </div>
+                <div class="fromdate" style="display: flex;justify-content: space-between;">
+                  <h2>Quantity:</h2>
+                  <h2><%= order.quantity %></h2>
+                </div>
+                <div class="fromdate" style="display: flex;justify-content: space-between;">
+                  <h2>Car Title:</h2>
+                  <h2><%= order.car_detail[0].title %></h2>
+                </div>
+                <div class="fromdate" style="display: flex;justify-content: space-between;">
+                  <h2>Price:</h2>
+                  <h2><%= order.car_detail[0].price %></h2>
+                </div>
+              </div>
+        </div>
+
+
+</body>
+</html>

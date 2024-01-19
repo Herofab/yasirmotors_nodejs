@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Confirmation</title>
+    <style>
+        body, html {
+            height: 100%;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #f7f7f7;
+            font-family: 'Arial', sans-serif;
+        }
+
+        .confirmation-container {
+            width: 80%;
+            max-width: 600px;
+            background: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            animation: fadeIn 1s ease-in-out;
+            text-align: center;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        input[type="text"], input[type="email"], input[type="tel"], input[type="hidden"] {
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        button {
+            padding: 15px 20px;
+            background-color: #130f40;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 18px;
+            transition: background-color 0.3s ease;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            background-color: #130f40;
+        }
+        
+    </style>
+<style>
+  .loader-spinner {
+      border: 4px solid #f3f3f3; /* Light grey border */
+      border-top: 4px solid #3498db; /* Blue border */
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      animation: spin 2s linear infinite;
+  }
+
+  @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+  }
+
+  #loader {
+      position: fixed; /* Stay in place */
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%); /* Center the loader */
+      background: rgba(255, 255, 255, 0.7); /* Semi-transparent white background */
+      z-index: 1000; /* Sit on top */
+  }
+</style>
+</head>
+<body>
+  <div class="confirmation-container">
+    <h2>BOOKING CONFIRMATION</h2>
+    <button id="otpButton">Send OTP</button>
+    <div id="loader" style="display: none;">
+        <div class="loader-spinner"></div> <!-- You can style this as needed -->
+    </div>
+    <form action="/verify-otp" method="POST">
+        <input type="text" id="otpInput" name="otp" placeholder="Enter OTP">
+        <input type="hidden" name="orderId" value="<%= orderId %>">
+        <button id="verifyOtpButton" type="submit">Verify OTP</button>
+    </form>
+</div>
+
+<script>
+  document.getElementById('otpButton').addEventListener('click', function() {
+      // Show the loader
+      document.getElementById('loader').style.display = 'block';
+
+      fetch('/send-otp', {
+          method: 'POST',
+          headers: {
+              'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ orderId: '<%= orderId %>' }), // Use the actual order ID
+      })
+      .then(response => response.text())
+      .then(data => {
+          alert(data);
+          // Hide the loader
+          document.getElementById('loader').style.display = 'none';
+      })
+      .catch((error) => {
+          console.error('Error:', error);
+          // Hide the loader
+          document.getElementById('loader').style.display = 'none';
+      });
+  });
+
+  document.getElementById('verifyOtpButton').addEventListener('click', function(event) {
+      event.preventDefault();
+      // Show the loader
+      document.getElementById('loader').style.display = 'block';
+
+      const otp = document.getElementById('otpInput').value;
+      fetch('/verify-otp', {
+          method: 'POST',
+          headers: {
+              'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ otp: otp, orderId: '<%= orderId %>' }), // Use the actual order ID
+      })
+      .then(response => response.text())
+      .then(data => {
+          alert(data);
+          // Hide the loader
+          document.getElementById('loader').style.display = 'none';
+      })
+      .catch((error) => {
+          console.error('Error:', error);
+          // Hide the loader
+          document.getElementById('loader').style.display = 'none';
+      });
+  });
+</script>
+</body>
+</html>

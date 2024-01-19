@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/css/newarrivals.css">
+    
+</head>
+<body>
+    
+      <div class="main">
+        <div class="form">
+    <form action="/edit/<%= newarrivals._id %>" method="POST"  enctype="multipart/form-data">
+        <label for="product_code">Product Code:</label><br>
+        <input type="text" id="product_code" name="product_code" value="<%= newarrivals.product_code %>"><br>
+        <label for="title">Title:</label><br>
+        <input type="text" id="title" name="title" value="<%= newarrivals.title %>"><br>
+        <label for="brand">Brand:</label><br>
+        <input type="text" id="brand" name="brand" value="<%= newarrivals.brand %>"><br>
+        <label for="price">Price:</label><br>
+        <input type="text" id="price" name="price" value="<%= newarrivals.price %>"><br>
+        <label for="description">Description:</label><br>
+        <input type="text" id="description" name="description" value="<%= newarrivals.description %>"><br>
+        <label for="gender">Gender:</label><br>
+        <select id="gender" name="gender">
+            <option value="men" <%= newarrivals.gender === 'men' ? 'selected' : '' %>>Men</option>
+            <option value="women" <%= newarrivals.gender === 'women' ? 'selected' : '' %>>Women</option>
+            <option value="kids" <%= newarrivals.gender === 'kids' ? 'selected' : '' %>>Kids</option>
+        </select><br>
+
+       <label for="category">Category:</label><br>
+<select id="category" name="category">
+    <option value="accessories" <%= newarrivals.category === 'accessories' ? 'selected' : '' %>>Accessories</option>
+    <option value="footwear" <%= newarrivals.category === 'footwear' ? 'selected' : '' %>>Footwear</option>
+    <option value="clothes" <%= newarrivals.category === 'clothes' ? 'selected' : '' %>>Clothes</option>
+</select><br>
+        <label for="subcategory">Subcategory:</label><br>
+        <input type="text" id="subcategory" name="subcategory" value="<%= newarrivals.subcategory %>"><br>
+        <label for="childsubcategory">Child Subcategory:</label><br>
+        <input type="text" id="childsubcategory" name="childsubcategory" value="<%= newarrivals.childsubcategory %>"><br>
+        <label for="product_status">Product Status:</label><br>
+        <input type="text" id="product_status" name="product_status" value="<%= newarrivals.product_status %>"><br>
+        <label for="old_price">Old Price:</label><br>
+        <input type="text" id="old_price" name="old_price" value="<%= newarrivals.old_price %>"><br>
+        <label for="new_price">New Price:</label><br>
+        <input type="text" id="new_price" name="new_price" value="<%= newarrivals.new_price %>"><br>
+        <label for="discount">Discount:</label><br>
+        <input type="text" id="discount" name="discount" value="<%= newarrivals.discount %>"><br>
+        <label for="image">New image:</label><br>
+        <input type="file" id="image" name="image"><br>
+        <input type="file" id="images" name="images" multiple><br>
+        <input type="submit" value="Update">
+        
+        <br><br>
+    </div>
+    </form>
+
+</div>
+  
+</body>
+</html>

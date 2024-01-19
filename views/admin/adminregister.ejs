@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="/css/login.css">
+
+</head>
+
+<body>
+    <section>
+        <div class="container">
+            <div class="user signinBx">
+                <div class="imgBx"><img src="/images/login/login-logo.png" /></div>
+                <div class="formBx">
+                    <form action="/login" method="POST">
+                        <h2>Sign In</h2>
+                        <input type="text" id="username" name="username" placeholder="Username" />
+                        <input type="password" id="password" name="password" placeholder="Password" />
+                        <input type="submit" name="" value="Login" />
+                        <p class="signup">
+                            Don't have an account ?
+                            <a href="#" onclick="toggleForm();">Sign Up.</a>
+                        </p>
+                    </form>
+                </div>
+            </div>
+            <div class="user signupBx">
+                <div class="formBx">
+                    <form action="/admin-register" name="reg" method="POST" id="registerForm">
+                        <h2>Create an account</h2>
+                        <input type="text" id="username" name="username" placeholder="Username" />
+                        <input type="email" id="email" name="email" placeholder="Email Address" />
+                        <input type="text" id="phone" name="phone" placeholder="Phone" />
+                        <input type="password" id="password" name="password" placeholder="Create Password" />
+                        
+                        <input type="submit" name="" value="Register" id="registerButton" disabled />
+                        <button type="button" id="verifyButton">Verify</button>
+                        <p class="signup">
+                            Already have an account ?
+                            <a href="#" onclick="toggleForm();">Sign in.</a>
+                        </p>
+                    </form>
+                </div>
+                <div class="imgBx"><img src="/images/login/login-logo.png" alt="" /></div>
+            </div>
+            
+            <!-- Newsletter Signup Form -->
+           <!-- Newsletter Signup Form -->
+<div id="newsletterForm" style="display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 400px; height: 400px; background: white; color: black; padding: 20px; box-sizing: border-box;">
+    <h2>Newsletter Signup</h2>
+    <form action="/verify-registration-otp" method="POST">
+        <input type="text" id="otpInput" name="otp" placeholder="Enter OTP">
+        <input type="hidden" name="email" value="<%= email %>">
+        <button id="verifyOtpButton" type="submit">Verify OTP</button>
+    </form>
+</div>
+
+        </div>
+        <div id="newsletterForm" style="display: none;">
+            <h2>Newsletter Signup</h2>
+            <form action="/verify-registration-otp" method="POST">
+                <input type="text" id="otpInput" name="otp" placeholder="Enter OTP">
+                <input type="hidden" name="email" value="<%= email %>">
+                <button id="verifyOtpButton" type="submit">Verify OTP</button>
+            </form>
+        </div>
+        
+
+    </section>
+
+    <script>
+        let isOtpVerified = false;
+    
+        document.getElementById('verifyButton').addEventListener('click', function(event) {
+            event.preventDefault();
+    
+            // Send an AJAX request to the server to send the OTP
+            fetch('/penta/adminregister', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    email: document.getElementById('email').value,
+                    // Include other form data as needed
+                }),
+            })
+            .then(response => response.text())
+            .then(data => {
+                // Show the newsletter signup form
+                document.getElementById('newsletterForm').style.display = 'block';
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
+        });
+    
+        document.getElementById('verifyOtpButton').addEventListener('click', function(event) {
+            event.preventDefault();
+            // Verify the OTP
+            // ...
+            // If the OTP is correct, hide the newsletter signup form and enable the register button
+            document.getElementById('newsletterForm').style.display = 'none';
+            document.getElementById('registerButton').disabled = false;
+            isOtpVerified = true;
+        });
+    
+        document.getElementById('registerForm').addEventListener('submit', function(event) {
+            if (!isOtpVerified) {
+                event.preventDefault();
+            }
+        });
+    </script>
+
+   
+
+    <script>const toggleForm = () => {
+            const container = document.querySelector('.container');
+            container.classList.toggle('active');
+        };</script>
+</body>
+
+
+
+</html>

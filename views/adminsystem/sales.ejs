@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0"
+    />
+    <title>Admin</title>
+    
+    <link rel="stylesheet" href="/css/dashboard.css">
+    <style>
+      .selection{
+        padding: 15px;
+      }
+      select{
+        padding: 10px;
+        border: 1px solid #000;
+        margin-bottom: 7px;
+
+      }
+      input{
+        padding: 10px;
+        border: 1px solid #000;
+        margin-bottom: 7px;
+      }
+      button{
+        padding: 10px;
+        margin-bottom: 7px;
+        border: 1px solid #000;
+        cursor: pointer;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <aside>
+        <div class="top">
+          <div class="logo">
+            <img src="/images/fyp1.png" alt="" />
+            <h2>Yasir<span class="danger">Motors</span></h2>
+          </div>
+          <div class="close" id="close-btn">
+            <span class="material-symbols-outlined"> close </span>
+          </div>
+        </div>
+        <div class="sidebar">
+          <a href="/adminsystem/dashboard" >
+            <span class="material-symbols-outlined"> dashboard </span>
+            <h3>DASHBOARD</h3>
+          </a>
+          <a href="/adminsystem/order">
+            <span class="material-symbols-outlined"> orders </span>
+            <h3>BOOKINGS</h3>
+          </a>
+          <a href="/adminsystem/sales" class="active">
+            <span class="material-symbols-outlined"> point_of_sale </span>
+            <h3>SALE</h3>
+          </a>
+          <a href="/adminsystem/newcars" >
+            <span class="material-symbols-outlined"> database </span>
+            <h3>NEW CARS</h3>
+          </a>
+          <a href="/adminsystem/additem">
+            <span class="material-symbols-outlined"> upload_file </span>
+            <h3>ADD NEW</h3>
+          </a>
+          <a href="/logout">
+            <span class="material-symbols-outlined"> logout </span>
+            <h3>Logout</h3>
+          </a>
+        </div>
+      </aside>
+      <main>
+        <h1>SALES DEPARTMENT</h1>
+
+        <div class="insights">
+         
+          <!-- =====================================start=================================================== -->
+          <div class="sales">
+           
+            <div class="middle">
+              <div class="left">
+                <h3>Add sale on Whole Website</h3>
+               
+                <form action="/apply-discount" method="POST">
+                  <div class="discount-section">
+                      <input type="number" id="discountInput" name="discount" placeholder="Enter discount percentage">
+                      <button type="submit" id="submitDiscountButton">Submit</button>
+                      <button type="button" id="disableDiscountButton">Disable</button>
+                  </div>
+              </form>
+              </div>
+
+              <div class="progress">
+                <div class="number"></div>
+              </div>
+            </div>
+          </div>
+          <!-- =====================================end=================================================== -->
+         
+          <!-- whole web sale -->
+          <div class="sales">
+            <div class="middle">
+              <div class="left">
+                <h3>Add Sale On Brands</h3>
+                <form action="/apply-brand-discount" method="POST">
+                  <div class="brands">
+                      <select id="brands" name="brand">
+                        <option value="select">Select Brand</option>
+                          <option value="toyota">toyota</option>
+                          <option value="suzuki">suzuki</option>
+                          <option value="honda">honda</option>
+                          <option value="audi">audi</option>
+                          <option value="bmw">bmw</option>
+                          <option value="kia">kia</option>
+                          <option value="changan">changan</option>
+                          <option value="nissan">nissan</option>
+                      </select>
+                      <input type="number" id="discountInput" name="discount" placeholder="Enter discount percentage">
+                      <button type="submit" id="submitButton">Submit</button>
+                      <button type="button" id="disableButton">Disable</button>
+                  </div>
+              </form>
+              <h3>Remove Sale On Brands</h3>
+              <form action="/remove-brand-discount" method="POST">
+                <div class="brands">
+                    <select id="brands" name="brand">
+                      <option value="select">Select Brand</option>
+                      <option value="toyota">toyota</option>
+                      <option value="suzuki">suzuki</option>
+                      <option value="honda">honda</option>
+                      <option value="audi">audi</option>
+                      <option value="bmw">bmw</option>
+                      <option value="kia">kia</option>
+                      <option value="changan">changan</option>
+                      <option value="nissan">nissan</option>
+                    </select>
+                    <button type="submit" id="removeButton">Remove Sale</button>
+                </div>
+            </form>
+              </div>
+
+              <div class="progress">
+                <div class="number"></div>
+              </div>
+            </div>
+          </div>
+          <!-- =====================================end=================================================== -->
+        </div>
+       
+      </main>
+      <!-- ======================Main ended=========================== -->
+      <div class="right">
+        <div class="top">
+          <button id="menu-btn">
+            <span class="material-symbols-outlined"> menu </span>
+          </button>
+          <div class="theme-toggler">
+            <span class="material-symbols-outlined active"> light_mode </span>
+            <span class="material-symbols-outlined"> dark_mode </span>
+          </div>
+          <div class="profile">
+            <div class="info">
+              <p>Hey, <b>Umer</b></p>
+              <small class="text-muted">Admin</small>
+            </div>
+            <div class="profile-photo">
+              <img src="" alt="" />
+            </div>
+          </div>
+        </div>
+        <!-- ================================Top Ended============================ -->
+       
+    <script>
+      const sideMenu = document.querySelector("aside");
+      const menuBtn = document.querySelector("#menu-btn");
+      const closeBtn = document.querySelector("#close-btn");
+      const themeToggler = document.querySelector(".theme-toggler");
+      menuBtn.addEventListener("click", () => {
+        sideMenu.style.display = "block";
+      });
+      closeBtn.addEventListener("click", () => {
+        sideMenu.style.display = "none";
+      });
+
+      themeToggler.addEventListener("click", () => {
+        document.body.classList.toggle("dark-theme-variables");
+        themeToggler
+          .querySelector("span:nth-child(1)")
+          .classList.toggle("active");
+        themeToggler
+          .querySelector("span:nth-child(2)")
+          .classList.toggle("active");
+      });
+
+     
+    </script>
+     <script type="module" src="/js/admin.js"></script>
+     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+     document.getElementById('submitDiscountButton').addEventListener('click', function() {
+    var discount = Math.floor(document.getElementById('discountInput').value);
+    fetch('/apply-discount', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ discount: discount }),
+    })
+    .then(response => response.text())
+    .then(data => alert(data))
+    .catch((error) => {
+        console.error('Error:', error);
+    });
+});
+
+document.getElementById('disableDiscountButton').addEventListener('click', function() {
+            fetch('/remove-discount', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            })
+            .then(response => response.text())
+            .then(data => alert(data))
+            .catch((error) => {
+                console.error('Error:', error);
+            });
+        });
+</script>
+
+     
+   
+  </body>
+</html>
